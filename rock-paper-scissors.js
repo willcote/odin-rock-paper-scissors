@@ -27,3 +27,21 @@ function playOneRound(playerSelection, computerSelection) {
   // draw
   else return `It was a draw! You both chose ${playerSelection}`;
 }
+
+// *** testing playOneRound function ***
+// for (let i = 0; i < 10; i++) {
+//   let playerPick = "RocK";
+//   let cpuPick = getComputerChoice();
+//   console.log(playOneRound(playerPick, cpuPick));
+//   console.log(`P: ${playerPick}, C: ${cpuPick}`);
+// }
+
+function game() {
+  let numRoundsToPlay = 5;
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (let i = 0; i < numRoundsToPlay; i++) {
+    playOneRound();
+  }
+}
