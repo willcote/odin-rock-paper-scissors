@@ -7,7 +7,25 @@ function getComputerChoice() {
   else return "scissors";
 }
 
+function validatePlayerInput(playerInput) {
+  let isValid = false;
+  while (!isValid) {
+    if (
+      playerInput === "rock" ||
+      playerInput === "paper" ||
+      playerInput === "scissors"
+    )
+      isValid = true;
+    else
+      playerInput = prompt(
+        "Decide again. (must pick rock, paper, or scissors) "
+      );
+  }
+}
+
 function playOneRound(playerSelection, computerSelection) {
+  validatePlayerInput(playerSelection);
+
   playerSelection = playerSelection.toLowerCase();
 
   // lose
@@ -42,6 +60,23 @@ function game() {
   let computerScore = 0;
 
   for (let i = 0; i < numRoundsToPlay; i++) {
-    playOneRound();
+    let gameOutcome = playOneRound(prompt("Decide. "), getComputerChoice());
+
+    if (gameOutcome.substring(0, 5) === "You L") computerScore++;
+    else if (gameOutcome.substring(0, 5) === "You W") playerScore++;
+
+    console.log(gameOutcome);
   }
+
+  let resultMessage;
+
+  if (playerScore > computerScore) resultMessage = "You Win!";
+  else if (playerScore < computerScore) resultMessage = "You Lose!";
+  else resultMessage = "It was a Draw!";
+
+  console.log(
+    `Final score was: ${playerScore} - ${computerScore}. ${resultMessage}`
+  );
 }
+
+game();
