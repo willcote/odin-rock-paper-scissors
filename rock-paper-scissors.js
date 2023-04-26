@@ -10,23 +10,27 @@ function getComputerChoice() {
 function validatePlayerInput(playerInput) {
   let isValid = false;
   while (!isValid) {
-    if (
-      playerInput === "rock" ||
-      playerInput === "paper" ||
-      playerInput === "scissors"
-    )
-      isValid = true;
-    else
-      playerInput = prompt(
-        "Decide again. (must pick rock, paper, or scissors) "
-      );
+    if (typeof playerInput === "string") {
+      playerInput = playerInput.toLowerCase();
+      if (
+        playerInput === "rock" ||
+        playerInput === "paper" ||
+        playerInput === "scissors"
+      )
+        isValid = true;
+      else
+        playerInput = prompt(
+          "Invalid response. (must type 'rock', 'paper', or 'scissors') "
+        );
+    }
   }
+  return playerInput;
 }
 
 function playOneRound(playerSelection, computerSelection) {
-  validatePlayerInput(playerSelection);
+  playerSelection = validatePlayerInput(playerSelection);
 
-  playerSelection = playerSelection.toLowerCase();
+  // playerSelection = playerSelection.toLowerCase();
 
   // lose
   if (
@@ -59,8 +63,10 @@ function game() {
   let playerScore = 0;
   let computerScore = 0;
 
+  // play 5 games
   for (let i = 0; i < numRoundsToPlay; i++) {
-    let gameOutcome = playOneRound(prompt("Decide. "), getComputerChoice());
+    let playerChoice = prompt("Decide. ");
+    let gameOutcome = playOneRound(playerChoice, getComputerChoice());
 
     if (gameOutcome.substring(0, 5) === "You L") computerScore++;
     else if (gameOutcome.substring(0, 5) === "You W") playerScore++;
@@ -68,12 +74,14 @@ function game() {
     console.log(gameOutcome);
   }
 
+  // set a custom message based on result
   let resultMessage;
 
   if (playerScore > computerScore) resultMessage = "You Win!";
   else if (playerScore < computerScore) resultMessage = "You Lose!";
   else resultMessage = "It was a Draw!";
 
+  // print final message
   console.log(
     `Final score was: ${playerScore} - ${computerScore}. ${resultMessage}`
   );
