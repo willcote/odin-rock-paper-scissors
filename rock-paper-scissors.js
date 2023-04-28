@@ -71,11 +71,13 @@ function displayRoundOutcome(outcome) {
 }
 
 function game(playerChoice) {
-  gamesPlayed++;
   let gameOutcome = playOneRound(playerChoice, getComputerChoice());
   displayRoundOutcome(gameOutcome);
 
-  if (gamesPlayed === 5) displayResults(playerScore, computerScore);
+  // can't just track games played because of draws
+  totalScore = playerScore + computerScore;
+
+  if (totalScore === 5) displayResults(playerScore, computerScore);
 }
 
 function displayResults(playerScore, computerScore) {
@@ -95,7 +97,7 @@ function removeResults() {}
 const choices = document.querySelectorAll(".choice");
 const results = document.querySelector(".results");
 
-let gamesPlayed = 0;
+let totalScore = 0;
 let playerScore = 0;
 let computerScore = 0;
 
