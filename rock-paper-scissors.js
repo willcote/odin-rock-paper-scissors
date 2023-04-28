@@ -71,13 +71,20 @@ function displayRoundOutcome(outcome) {
 }
 
 function game(playerChoice) {
+  if (reset) {
+    initGame();
+  }
+
   let gameOutcome = playOneRound(playerChoice, getComputerChoice());
   displayRoundOutcome(gameOutcome);
 
   // can't just track games played because of draws
   totalScore = playerScore + computerScore;
 
-  if (totalScore === 5) displayResults(playerScore, computerScore);
+  if (totalScore === 5) {
+    reset = true;
+    displayResults(playerScore, computerScore);
+  }
 }
 
 function displayResults(playerScore, computerScore) {
@@ -92,7 +99,17 @@ function displayResults(playerScore, computerScore) {
   results.appendChild(result);
 }
 
-function removeResults() {}
+function removeResults() {
+  results.innerHTML = "";
+}
+
+function initGame() {
+  results.innerHTML = "";
+  reset = false;
+  playerScore = 0;
+  computerScore = 0;
+  totalScore = 0;
+}
 
 const choices = document.querySelectorAll(".choice");
 const results = document.querySelector(".results");
@@ -100,6 +117,7 @@ const results = document.querySelector(".results");
 let totalScore = 0;
 let playerScore = 0;
 let computerScore = 0;
+let reset = false;
 
 // simulates the game after any choice is clicked
 let playerChoice;
