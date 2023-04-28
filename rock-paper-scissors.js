@@ -74,6 +74,8 @@ function game(playerChoice) {
   gamesPlayed++;
   let gameOutcome = playOneRound(playerChoice, getComputerChoice());
   displayRoundOutcome(gameOutcome);
+
+  if (gamesPlayed === 5) displayResults(playerScore, computerScore);
 }
 
 function displayResults(playerScore, computerScore) {
@@ -88,14 +90,14 @@ function displayResults(playerScore, computerScore) {
   results.appendChild(result);
 }
 
+function removeResults() {}
+
 const choices = document.querySelectorAll(".choice");
 const results = document.querySelector(".results");
 
 let gamesPlayed = 0;
 let playerScore = 0;
 let computerScore = 0;
-
-if (gamesPlayed === 5) displayResults(playerScore, computerScore);
 
 // simulates the game after any choice is clicked
 let playerChoice;
