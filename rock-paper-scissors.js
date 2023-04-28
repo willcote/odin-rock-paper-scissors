@@ -28,9 +28,7 @@ function validatePlayerInput(playerInput) {
 }
 
 function playOneRound(playerSelection, computerSelection) {
-  playerSelection = validatePlayerInput(playerSelection);
-
-  // playerSelection = playerSelection.toLowerCase();
+  // playerSelection = validatePlayerInput(playerSelection);
 
   // lose
   if (
@@ -38,14 +36,65 @@ function playOneRound(playerSelection, computerSelection) {
     (playerSelection === "paper" && computerSelection === "scissors") ||
     (playerSelection === "scissors" && computerSelection === "rock")
   )
-    return `You Lose! ${computerSelection} beats ${playerSelection}!`;
+    return [playerSelection, computerSelection, "lose"];
+  //`You Lose! ${computerSelection} beats ${playerSelection}!`;
   // win
   else if (
     (playerSelection === "rock" && computerSelection === "scissors") ||
     (playerSelection === "paper" && computerSelection === "rock") ||
     (playerSelection === "scissors" && computerSelection === "paper")
   )
-    return `You Win! ${playerSelection} beats ${computerSelection}!`;
+    return [playerSelection, computerSelection, "win"];
   // draw
-  else return `It was a draw! You both chose ${playerSelection}`;
+  else return [playerSelection, computerSelection, "draw"];
 }
+
+function displayRoundOutcome(outcome) {
+  const resultsContainer = document.querySelector(".results");
+  const outcomeElement = document.createElement("p");
+  if (outcome[2] === "win")
+    outcomeElement.textContent = `You win! ${outcome[0]} beats ${outcome[1]}!`;
+  if (outcome[2] === "lose")
+    outcomeElement.textContent = `You lose! ${outcome[1]} beats ${outcome[0]}!`;
+  if (outcome[2] === "draw") outcomeElement.textContent = `It's a draw.`;
+  resultsContainer.appendChild(outcomeElement);
+}
+
+function game(playerChoice) {
+  // let numRoundsToPlay = 5;
+  let playerScore = 0;
+  let computerScore = 0;
+
+  //
+  let gameOutcome = playOneRound(playerChoice, getComputerChoice());
+  displayRoundOutcome(gameOutcome);
+  //
+
+  // set a custom message based on result
+  let resultMessage;
+
+  if (playerScore > computerScore) resultMessage = "You Win!";
+  else if (playerScore < computerScore) resultMessage = "You Lose!";
+  else resultMessage = "It was a Draw!";
+
+  // print final message
+  // results.textContent = `Final score was: ${playerScore} - ${computerScore}. ${resultMessage}`;
+}
+
+function displayResults(playerScore, computerScore) {
+  if (isFinal);
+}
+
+const choices = document.querySelectorAll(".choice");
+const results = document.querySelector(".results");
+
+let playerScore = 0;
+let computerScore = 0;
+
+// simulates the game after any choice is clicked
+let playerChoice;
+choices.forEach((c) => {
+  c.addEventListener("click", () => {
+    game(c.textContent);
+  });
+});
